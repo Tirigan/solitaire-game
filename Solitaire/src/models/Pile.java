@@ -15,6 +15,8 @@ public abstract class Pile {
     public Pile(List<Card> cards) {
         this.cards = cards;
     }
+    
+    
 
     public void addCard(Card card) {
         cards.add(card);
@@ -42,6 +44,10 @@ public abstract class Pile {
         List<Card> removedCards = new ArrayList<>(cards.subList(index, index + count));
         cards.removeAll(removedCards);
         return removedCards;
+    }
+    
+    public List<Card> getCards() {
+    	return cards;
     }
 
     public Card getCard(int index) {
