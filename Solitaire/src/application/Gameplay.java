@@ -1,7 +1,10 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import controllers.GameController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +22,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Card;
+import models.Deck;
+import models.Tableau;
 
 
 
@@ -38,10 +44,13 @@ public class Gameplay {
         scene = new Scene(root, 900, 600);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        
+        // Start the Game
+        GameController gameController = new GameController();
+        gameController.startGame();
 
         // Set the title of the window
-        primaryStage.setTitle("Solitaire");
-
+        primaryStage.setTitle("Solitaire");        
 
         // Create a button for showing the rules
         Button rulesButton = new Button("Rules");

@@ -2,10 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-public class Deck {
-    private List<Card> cards;
+public class Deck extends Pile {
 
     public Deck() {
         cards = new ArrayList<>();
@@ -22,9 +20,5 @@ public class Deck {
 
     public Card getCard(int index) {
         return cards.get(index);
-    }
-
-    public int getSize() {
-        return cards.size();
     }
 }
