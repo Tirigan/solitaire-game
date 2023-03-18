@@ -3,25 +3,44 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.TableauView;
+import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import models.Card;
 import models.Deck;
 import models.Stock;
 import models.Tableau;
 
 public class GameController {
-    private final int tableauCount = 7;
-	private final List<Tableau> tableaus = new ArrayList<>(tableauCount);
-	
+	// Deck to play with
+	private final Deck deck = new Deck();
+	// Amount of Columns in the Tableau
+    private final int tableauColumnCount = 7;
+	// The Tableau View
+	private TableauView tableauView;
+
 	private Stock stock;
+	
+	// Scene to display the game in
+    private Scene scene;
+    
+    public Scene getScene() {
+    	return scene;
+    }
 
-	public void startGame() {
-        // Add a deck to the game and shuffle it
-        Deck deck = new Deck();
+	
+	public void prepareGameComponents() {
+        // fill the deck and shuffle it
+		deck.reset();
         deck.shuffle();
-        System.out.println("Deck size: " + deck.size());
 
-        // prepare the tableaus
-        for(int i=1;i <= tableauCount; i++) {
+
+        // prepare the Tableau
+    	final List<Tableau> tableaus = new ArrayList<>(tableauColumnCount);
+        for(int i=1;i <= tableauColumnCount; i++) {
         	tableaus.add(new Tableau());
         }
         for(int i=0;i < tableaus.size(); i++) {
@@ -40,18 +59,17 @@ public class GameController {
         		}
         	}
         }
-        for(int i=0;i < tableaus.size(); i++) {
-            System.out.println("Tableau #"+i+" size: " + tableaus.get(i).size());
-        }
+        tableauView = new TableauView(tableaus);
         
         // add the leftover deck to the stock
         stock = new Stock(deck.getCards());
         System.out.println("Stock size: " + stock.size());
 	}
-
-	public List<Tableau> getTableaus() {
-		return tableaus;
+	
+	public TableauView getTableauView() {
+		return tableauView;
 	}
+
 
 	public Stock getStock() {
 		return stock;

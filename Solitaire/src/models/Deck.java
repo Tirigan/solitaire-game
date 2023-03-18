@@ -6,6 +6,10 @@ import java.util.Collections;
 public class Deck extends Pile {
 
     public Deck() {
+        reset();
+    }
+    
+    public void reset() {
         cards = new ArrayList<>();
         for (Card.Suit suit : Card.Suit.values()) {
             for (Card.Rank rank : Card.Rank.values()) {

@@ -1,6 +1,15 @@
 package models;
 
+import application.CardView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public class Card {
+	private double cardWidth = 60.0; // set the width of the card image
+	public static double cardHeight = 80.0; // set the height of the card image
+	private final Image faceDownImage = new Image(CardView.class.getResource("/images/cards/card-face-down.jpeg").toExternalForm());
+	private final Image faceUpImage;
+	
     public enum Suit {
         HEARTS,
         SPADES,
@@ -42,6 +51,7 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
         this.faceUp = false;
+		this.faceUpImage = new Image(CardView.class.getResource("/images/cards/card-"+suit.name()+"-"+rank.name()+".png").toExternalForm());
     }
 
     public Suit getSuit() {
@@ -74,6 +84,18 @@ public class Card {
         }
         return suit == otherCard.getSuit();
     }
+    
+	public ImageView getCardImageView() {
+		ImageView imageView;
+		if(isFaceUp()) {
+			imageView = new ImageView(faceUpImage);
+		} else {
+			imageView = new ImageView(faceDownImage);
+		}
+		imageView.setFitWidth(cardWidth); // set the width of the image view
+        imageView.setFitHeight(cardHeight); // set the height of the image view
+		return imageView;
+	}
 
     @Override
     public String toString() {
