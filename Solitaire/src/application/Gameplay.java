@@ -13,6 +13,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import models.Card;
 
 
 
@@ -80,10 +81,17 @@ public class Gameplay {
         GameController gameController = new GameController();
         gameController.prepareGameComponents();
         final Node tableauView = gameController.getTableauView().buildView();
-        final Node stockView = gameController.getStockView().buildView();
+        
+        // layout the tableau
+        tableauView.setLayoutX(16);
+        tableauView.setLayoutY(scene.getHeight() - (scene.getHeight() - Card.cardHeight - 32));
 
-        tableauView.setLayoutY(scene.getHeight() - (scene.getHeight() / 2));
-        tableauView.setLayoutX(120);
+        // layout the stock view
+        final Node stockView = gameController.getStockView().buildView();
+        stockView.setLayoutX(16);
+        stockView.setLayoutY(scene.getHeight() - (scene.getHeight() - 16));
+
+        
         root.getChildren().add(tableauView);
         root.getChildren().add(stockView);
     }

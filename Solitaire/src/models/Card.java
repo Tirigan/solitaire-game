@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Card {
-	private double cardWidth = 60.0; // set the width of the card image
+	public static double cardWidth = 60.0; // set the width of the card image
 	public static double cardHeight = 80.0; // set the height of the card image
 	private final Image faceDownImage = new Image(CardView.class.getResource("/images/cards/card-face-down.jpeg").toExternalForm());
 	private final Image faceUpImage;
