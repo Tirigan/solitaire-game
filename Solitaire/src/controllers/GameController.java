@@ -3,12 +3,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.StockView;
 import application.TableauView;
-import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import models.Card;
 import models.Deck;
 import models.Stock;
@@ -19,17 +15,9 @@ public class GameController {
 	private final Deck deck = new Deck();
 	// Amount of Columns in the Tableau
     private final int tableauColumnCount = 7;
-	// The Tableau View
+	// The Game View Components
 	private TableauView tableauView;
-
-	private Stock stock;
-	
-	// Scene to display the game in
-    private Scene scene;
-    
-    public Scene getScene() {
-    	return scene;
-    }
+	private StockView stockView;
 
 	
 	public void prepareGameComponents() {
@@ -62,8 +50,8 @@ public class GameController {
         tableauView = new TableauView(tableaus);
         
         // add the leftover deck to the stock
-        stock = new Stock(deck.getCards());
-        System.out.println("Stock size: " + stock.size());
+        Stock stock = new Stock(deck.getCards());
+        stockView = new StockView(stock);
 	}
 	
 	public TableauView getTableauView() {
@@ -71,8 +59,8 @@ public class GameController {
 	}
 
 
-	public Stock getStock() {
-		return stock;
+	public StockView getStockView() {
+		return stockView;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import controllers.GameController;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -78,7 +79,13 @@ public class Gameplay {
         // Start the Game
         GameController gameController = new GameController();
         gameController.prepareGameComponents();
-        root.getChildren().add(gameController.getTableauView().buildView());
+        final Node tableauView = gameController.getTableauView().buildView();
+        final Node stockView = gameController.getStockView().buildView();
+
+        tableauView.setLayoutY(scene.getHeight() - (scene.getHeight() / 2));
+        tableauView.setLayoutX(120);
+        root.getChildren().add(tableauView);
+        root.getChildren().add(stockView);
     }
 
     public Scene getScene() {
