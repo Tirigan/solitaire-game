@@ -33,7 +33,7 @@ public class CardView extends ImageView {
             setTranslateY(offsetY);
         });
         setOnMouseReleased(event -> {
-            // Add code to snap card to appropriate position on release, if desired
+            // Add code to snap card to appropriate position on release
         });
         setOnDragDetected(event -> {
             Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
