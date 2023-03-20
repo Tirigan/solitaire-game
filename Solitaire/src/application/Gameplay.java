@@ -1,13 +1,19 @@
 package application;
 
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import controllers.GameController;
 import javafx.scene.Scene;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -20,12 +26,21 @@ import models.Card;
 public class Gameplay {
 
     private Scene scene;
-
+    private Timer timer;
+    private int secondsPassed;
+    private Label lastTimerLabel;
+    private TimerTask timerTask;
+    private int score;
+    private Label scoreLabel;
+    private Label emptyTimer;
+    
+ 
     public Gameplay(Stage primaryStage) {
 
         // Create a pane to hold our content
         Pane root = new Pane();
-
+       
+        
         // Set the background color to blue
         root.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
@@ -94,10 +109,104 @@ public class Gameplay {
         
         root.getChildren().add(tableauView);
         root.getChildren().add(stockView);
+        
+        
+     // Create the timer and score label
+        timer = new Timer();
+        scoreLabel = new Label("0/52");
+        scoreLabel.setStyle("-fx-font-size: 30;");
+        scoreLabel.setTranslateX(scene.getWidth() - 200);
+        scoreLabel.setTranslateY(20);
+        Pane root1 = (Pane) scene.getRoot();
+        root1.getChildren().add(scoreLabel);
+        
+        // Set 0:00 when gameplay first opens
+        emptyTimer = new Label("0:00");
+        emptyTimer.setStyle("-fx-font-size: 30;");
+        emptyTimer.setTranslateX(scene.getWidth() - 100);
+        emptyTimer.setTranslateY(20);
+        Pane root2 = (Pane) scene.getRoot();
+        root2.getChildren().add(emptyTimer);
+        
+        // Create a new timer instance and schedule a task to update the timer label every second
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                secondsPassed++;
+                Platform.runLater(() -> updateTimerLabel());
+            }
+        };
+        timer.schedule(timerTask, 1000, 1000);
+        
+		
+     // Temporary method of adding points
+        Button addPoint = new Button("Add Point");
+        addPoint.setPrefWidth(120);
+        addPoint.setLayoutX(scene.getWidth() - addPoint.getPrefWidth() -110);
+        addPoint.setLayoutY(70);
+        addPoint.setOnAction(e -> {
+            // Add 1 point
+            score++;
+            // Update the score label
+            updateScoreLabel();
+
+            // Check if score is equal to 52, and show GameOver popup if true
+            if (score == 52) {
+                // Get the elapsed time in minutes and seconds
+                int minutes = secondsPassed / 60;
+                int seconds = secondsPassed % 60;
+
+                // Format the elapsed time as a string
+                String timeString = String.format("%d:%02d", minutes, seconds);
+
+                // Show the GameOver popup with the elapsed time
+                GameOver.showGameOver(primaryStage, timeString);
+            }
+        });
+        root.getChildren().add(addPoint);
+
+ }
+
+    private void updateTimerLabel() {
+        int minutes = secondsPassed / 60;
+        int seconds = secondsPassed % 60;
+        String timeString = String.format("%d:%02d", minutes, seconds);
+        Label timerLabel = new Label(timeString);
+        timerLabel.setStyle("-fx-font-size: 30;");
+        timerLabel.setTranslateX(scene.getWidth() - 100);
+        timerLabel.setTranslateY(20);
+        Pane root = (Pane) scene.getRoot();
+        root.getChildren().remove(lastTimerLabel);
+        root.getChildren().remove(emptyTimer);
+        root.getChildren().add(timerLabel);
+        lastTimerLabel = timerLabel;
     }
 
-    public Scene getScene() {
-        return scene;
+    // Method to update the score label
+    private void updateScoreLabel() {
+        String scoreString = String.format("%d/52", score);
+        scoreLabel.setText(scoreString);
+    }
+
+    // Method to score a point
+    public void scorePoint() {
+        // Add 1 to the score
+        score++;
+        // Update the score label
+        updateScoreLabel();
+    }
+
+    public void endGame() {
+        // Stop the timer by canceling the TimerTask
+        timerTask.cancel();
+
+        // Code to end the game and timer here
+    }
+
+    
+	    // Getter method for the scene
+	    public Scene getScene() {
+	        return scene;
     }
 
 }
