@@ -137,8 +137,7 @@ public class Gameplay {
             }
         };
         timer.schedule(timerTask, 1000, 1000);
-        
-
+       
      // Temporary method of adding points
         Button addPoint = new Button("Add Point");
         addPoint.setPrefWidth(120);
