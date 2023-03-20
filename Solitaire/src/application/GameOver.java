@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 
 public class GameOver {
 	
-
 	public static void showGameOver(Stage owner, String timeString) {
 	    // Create a pane to hold our content
 	    Pane root = new Pane();
