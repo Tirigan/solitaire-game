@@ -95,21 +95,32 @@ public class Gameplay {
         // Start the Game
         GameController gameController = new GameController();
         gameController.prepareGameComponents();
-        final Node tableauView = gameController.getTableauView().buildView();
+        final Node tableauView = gameController.getTableauView();
         
         // layout the tableau
         tableauView.setLayoutX(16);
         tableauView.setLayoutY(scene.getHeight() - (scene.getHeight() - Card.cardHeight - 32));
 
         // layout the stock view
-        final Node stockView = gameController.getStockView().buildView();
+        final Node stockView = gameController.getStockView();
         stockView.setLayoutX(16);
         stockView.setLayoutY(scene.getHeight() - (scene.getHeight() - 16));
 
+        // layout the waste
+        final Node waste = gameController.getWasteView();
+        waste.setLayoutX(32 + Card.cardWidth);
+        waste.setLayoutY(scene.getHeight() - (scene.getHeight() - 16));
+        
+        // layout the foundations
+        final Node foundations = gameController.getFoundationGroupView();
+        foundations.setLayoutX(scene.getWidth() - (scene.getWidth()/2));
+        foundations.setLayoutY(scene.getHeight() - (scene.getHeight() - 16));
         
         root.getChildren().add(tableauView);
         root.getChildren().add(stockView);
-        
+        root.getChildren().add(foundations);
+        root.getChildren().add(waste);
+
         
      // Create the timer and score label
         timer = new Timer();

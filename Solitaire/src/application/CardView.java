@@ -9,6 +9,8 @@ public class CardView {
 	private final Image faceDownImage = new Image(CardView.class.getResource("/images/card-face-down.jpeg").toExternalForm());
 	private final Image faceUpImage;
 
+	private ImageView imageView;
+	
 	CardView(Card card) {
 		this.card = card;
 		this.faceUpImage = new Image(CardView.class.getResource("/images/card-"+card.getSuit().name()+"-"+card.getSuit().name()+".png").toExternalForm());
@@ -19,10 +21,14 @@ public class CardView {
 	}
 
 	public ImageView getCardImageView() {
-		if(card.isFaceUp()) {
-			return new ImageView(faceUpImage);
+		if(imageView == null) {
+			imageView = new ImageView(faceDownImage);
 		}
-		return new ImageView(faceDownImage);
+		if(card.isFaceUp()) {
+			imageView.setImage(faceUpImage);
+		}
+		imageView.setImage(faceDownImage);
+		return imageView;
 	}
 	
 }

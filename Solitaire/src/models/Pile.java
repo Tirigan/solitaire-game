@@ -17,7 +17,6 @@ public abstract class Pile {
     }
     
     
-
     public void addCard(Card card) {
         cards.add(card);
     }

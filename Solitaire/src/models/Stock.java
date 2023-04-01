@@ -17,14 +17,11 @@ public class Stock extends Pile {
         cards.addAll(originalCards);
     }
 
-    public void moveCardsToWaste() {
-        int numCards = Math.min(3, cards.size());
-        for (int i = 0; i < numCards; i++) {
-            Card card = takeTopCard();
-            if (card != null) {
-                card.flip();
-                Waste.getInstance().addCard(card);
-            }
+    public void moveTopCardToWaste() {
+    	Card card = takeTopCard();
+        if (card != null) {
+            card.flip();
+            Waste.getInstance().addCard(card);
         }
     }
 
