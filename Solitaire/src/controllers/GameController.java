@@ -127,7 +127,10 @@ public class GameController {
 		tableauGroupView.tableauViews().forEach((tableauView) -> {
 			tableauView.getTableau().getCards().forEach((card)->{
 				card.getCardImageView().setOnMouseClicked(event -> {
-					if(!card.isFaceUp()) return;
+					if(!tableauView.getTableau().isEmpty()) {
+						Card topCard = tableauView.getTableau().selectTopCard();
+						if(!topCard.isFaceUp()) topCard.flip();
+					}
 					
 					if(card.isDestination()) {
 						finishMove(tableauView, tableauView.getTableau());
@@ -188,9 +191,10 @@ public class GameController {
 			card.resetEffect();
 		});
 		tableauGroupView.tableauViews().forEach((tableauView) -> {
-			Card topCard = tableauView.getTableau().selectTopCard();
-			if(!topCard.isFaceUp()) topCard.flip();
-			
+			if(!tableauView.getTableau().isEmpty()) {
+				Card topCard = tableauView.getTableau().selectTopCard();
+				if(!topCard.isFaceUp()) topCard.flip();
+			}
 			
 			tableauView.getTableau().getCards().forEach((card) -> {
 				card.resetEffect();
