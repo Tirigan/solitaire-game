@@ -2,30 +2,26 @@ package application;
 
 import java.util.List;
 
-import javafx.geometry.Pos;
-import javafx.scene.layout.GridPane;
-import models.Card;
-import models.Tableau;
+import javafx.scene.layout.HBox;
 
-public class TableauGroupView extends GridPane {
-	private final List<Tableau> tableaus;
+public class TableauGroupView extends HBox {
 
-	public TableauGroupView( List<Tableau> tableaus) {
-		this.tableaus = tableaus;
-		setHgap(10); // horizontal gap between cards
-		setVgap(-65); // vertical gap between cards
-		setAlignment(Pos.CENTER); // center the cards in the grid
-		for(int i=0;i<tableaus.size();i++) {
-			final Tableau tableau = tableaus.get(i);
-			for(int j=0;j<tableau.getCards().size();j++) {
-				Card card = tableau.getCard(j);
-	            add(card.getCardImageView(), i, j); // add the image to the grid
-			}
+	private List<TableauView> tableauViews;
+	
+	public TableauGroupView(List<TableauView> tableauViews) {
+		this.tableauViews = tableauViews;
+		
+		// set the spacing between the nodes
+		this.setSpacing(10);
+				
+		for(int i=0;i<this.tableauViews.size();i++) {
+			// add the nodes to the HBox container
+			this.getChildren().add(this.tableauViews.get(i));
 		}
+	}	
+
+	public List<TableauView> tableauViews() {
+		return tableauViews;
 	}
-	
-	public List<Tableau> getTableaus() {
-		return tableaus;
-	}
-	
 }
+

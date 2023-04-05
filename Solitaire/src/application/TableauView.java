@@ -1,36 +1,39 @@
 package application;
 
 
-import javafx.scene.layout.StackPane;
+import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import models.Card;
-import models.Foundation;
+import models.Tableau;
 
-public class FoundationView extends StackPane implements CardDestination {
+public class TableauView extends VBox implements CardDestination {
 	private boolean destination = false;
-	private final Foundation foundation;
+	private final Tableau tableau;
 	
 	private Rectangle base;
 		
-	public FoundationView(Foundation foundation) {
-		this.foundation = foundation;
+	public TableauView(Tableau tableau) {
+		this.tableau = tableau;
+		setSpacing(-Card.cardHeight+20); // set the spacing between the child views
+
 		// create a rectangle with the size of the cards
 		base = new Rectangle(Card.cardWidth, Card.cardHeight);
 		// set the stroke color of the rectangle
 		base.setStroke(Color.BLACK);
 		base.setFill(Color.TRANSPARENT);
-		getChildren().add(base);
+//		getChildren().add(base);
 	}
 	
 	public void addCard(Card card) {
-		foundation.addCard(card);
+		tableau.addCard(card);
 		getChildren().add(card.getCardImageView());
 	}
 	
 
-	public Foundation getFoundation() {
-		return foundation;
+	public Tableau getTableau() {
+		return tableau;
 	}
 	
 	@Override

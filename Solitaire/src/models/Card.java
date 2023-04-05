@@ -1,13 +1,16 @@
 package models;
 
+import application.CardDestination;
 import application.CardView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Card {
+public class Card implements CardDestination {
 	private boolean selected = false;
+	private boolean destination = false;
+
 	public static double cardWidth = 60.0; // set the width of the card image
 	public static double cardHeight = 80.0; // set the height of the card image
 	private final Image faceDownImage = new Image(CardView.class.getResource("/images/cards/card-face-down.jpeg").toExternalForm());
@@ -121,14 +124,6 @@ public class Card {
 		return selected;
 	}
 
-	public void displayAsDestination() {
-        DropShadow highlight = new DropShadow();
-        highlight.setColor(Color.RED);
-        highlight.setRadius(20);
-        highlight.setSpread(0.5);
-        imageView.setEffect(highlight);
-	}
-	
 	public void resetEffect() {
         imageView.setEffect(null);
 	}
@@ -138,4 +133,15 @@ public class Card {
     public String toString() {
         return rank + " of " + suit;
     }
+
+	@Override
+	public boolean isDestination() {
+		return destination;
+	}
+
+	@Override
+	public void setIsDestination(boolean value) {
+		this.destination = value;
+	}
+
 }
