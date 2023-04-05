@@ -1,15 +1,19 @@
 package models;
 
 import application.CardView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 public class Card {
+	private boolean selected = false;
 	public static double cardWidth = 60.0; // set the width of the card image
 	public static double cardHeight = 80.0; // set the height of the card image
 	private final Image faceDownImage = new Image(CardView.class.getResource("/images/cards/card-face-down.jpeg").toExternalForm());
 	private final Image faceUpImage;
-	
+	ImageView imageView = new ImageView();
+
     public enum Suit {
         HEARTS,
         SPADES,
@@ -86,16 +90,49 @@ public class Card {
     }
     
 	public ImageView getCardImageView() {
-		ImageView imageView;
 		if(isFaceUp()) {
-			imageView = new ImageView(faceUpImage);
+			imageView.setImage(faceUpImage); 
 		} else {
-			imageView = new ImageView(faceDownImage);
+			imageView.setImage(faceDownImage); 
 		}
 		imageView.setFitWidth(cardWidth); // set the width of the image view
         imageView.setFitHeight(cardHeight); // set the height of the image view
+                
 		return imageView;
 	}
+	
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		if(selected) {
+			 // Create a DropShadow effect with a yellow highlight border
+	        DropShadow highlight = new DropShadow();
+	        highlight.setColor(Color.YELLOW);
+	        highlight.setRadius(20);
+	        highlight.setSpread(0.5);
+	        imageView.setEffect(highlight);
+		} else {
+			resetEffect();
+		}
+	}
+	
+
+	public boolean getSelected() {
+		return selected;
+	}
+
+	public void displayAsDestination() {
+        DropShadow highlight = new DropShadow();
+        highlight.setColor(Color.RED);
+        highlight.setRadius(20);
+        highlight.setSpread(0.5);
+        imageView.setEffect(highlight);
+	}
+	
+	public void resetEffect() {
+        imageView.setEffect(null);
+	}
+	
 
     @Override
     public String toString() {

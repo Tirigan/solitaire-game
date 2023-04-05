@@ -8,7 +8,7 @@ public class Tableau extends Pile {
         if (cards.isEmpty()) {
             return card.getRank() == Card.Rank.KING;
         }
-        Card topCard = takeTopCard();
+        Card topCard = selectTopCard();
         return !topCard.isSameColor(card) && topCard.getRank().getValue() == card.getRank().getValue() + 1;
     }
 

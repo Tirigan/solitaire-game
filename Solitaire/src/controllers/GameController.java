@@ -6,7 +6,7 @@ import java.util.List;
 import application.FoundationGroupView;
 import application.FoundationView;
 import application.StockView;
-import application.TableauView;
+import application.TableauGroupView;
 import application.WasteView;
 import models.Card;
 import models.Deck;
@@ -23,11 +23,13 @@ public class GameController {
 	// Amount of Columns in the Foundation
     private final int foundationColumnCount = 4;
 	// The Game View Components
-	private TableauView tableauView;
+	private TableauGroupView tableauView;
 	private StockView stockView;
 	private WasteView wasteView;
 	private FoundationGroupView foundationGroupView;
 
+	
+	Card cardSelected;
 	
 	public void prepareGameComponents() {
         // fill the deck and shuffle it
@@ -56,7 +58,7 @@ public class GameController {
         		}
         	}
         }
-        tableauView = new TableauView(tableaus);
+        tableauView = new TableauGroupView(tableaus);
         
         // prepare the waste 
         Waste waste = Waste.getInstance();
@@ -66,7 +68,27 @@ public class GameController {
         Stock stock = new Stock(deck.getCards());
         stockView = new StockView(stock, wasteView);
 	
-        
+        stockView.setOnMouseClicked(event -> {
+        	if(cardSelected != null) return;
+        	
+			// if empty, restart the cycle
+			if(stock.getCards().isEmpty()) {
+				// grab the cards from the waste and add them back to the stock
+				List<Card> cards = wasteView.getWaste().getCards();
+				stock.addCards(cards);
+				stockView.addCardsToView();
+				// reset the waste to zero cards
+				wasteView.getWaste().removeCards(0, cards.size());
+				wasteView.resetView();
+				return;
+			}
+			
+			// if not empty, take the top card and move it to the waste
+			Card card = stock.takeTopCard();
+			stockView.getChildren().remove(stockView.getChildren().size()-1);
+			card.flip();
+			wasteView.addCard(card);
+		});
 
         // prepare foundation groups
     	final List<FoundationView> foundations = new ArrayList<>(foundationColumnCount);
@@ -76,9 +98,62 @@ public class GameController {
     	foundations.add(new FoundationView(new Foundation(Card.Suit.SPADES)));
         foundationGroupView = new FoundationGroupView(foundations);
         
+        
+        wasteView.setOnMouseClicked(event -> {
+			// if empty, restart the cycle
+			if(!waste.getCards().isEmpty()) {
+				Card card = wasteView.getWaste().selectTopCard();
+				if(card.getSelected()) {
+					card.setSelected(false);
+					cardSelected = null;
+					resetAllCardEffects();
+				} else {
+					resetAllCardEffects();
+					cardSelected = card;
+					card.setSelected(true);
+					highlightDestinations(card);
+				}
+			}
+		});
 	}
 	
-	public TableauView getTableauView() {
+	public void highlightDestinations(Card card) {
+		tableauView.getTableaus().forEach((tableau) -> {
+			if(tableau.canAdd(card)) {
+				if(!tableau.isEmpty()) {
+					tableau.selectTopCard().displayAsDestination();
+				}
+			}
+		});
+		foundationGroupView.getFoundationViews().forEach((foundationView) -> {
+			if(foundationView.getFoundation().canAdd(card)){
+				if(!foundationView.getFoundation().isEmpty()) {
+					foundationView.getFoundation().selectTopCard().displayAsDestination();
+				} else {
+					foundationView.displayAsDestination();
+				}
+			}
+		});
+	}
+	
+	public void resetAllCardEffects() {
+		wasteView.getWaste().getCards().forEach((card) -> {
+			card.resetEffect();
+		});
+		tableauView.getTableaus().forEach((tableau) -> {
+			tableau.getCards().forEach((card) -> {
+				card.resetEffect();
+			});
+		});
+		foundationGroupView.getFoundationViews().forEach((foundationView) -> {
+			foundationView.removeAsDestination();
+			foundationView.getFoundation().getCards().forEach((card) -> {
+				card.resetEffect();
+			});
+		});
+	}
+	
+	public TableauGroupView getTableauView() {
 		return tableauView;
 	}
 
@@ -94,5 +169,8 @@ public class GameController {
 	public WasteView getWasteView() {
 		return wasteView;
 	}
+	
+	
+	
 	
 }

@@ -35,6 +35,13 @@ public abstract class Pile {
         }
         return cards.remove(cards.size() - 1);
     }
+    
+    public Card selectTopCard() {
+        if (cards.isEmpty()) {
+            return null;
+        }
+        return cards.get(cards.size() - 1);
+    }
 
     public List<Card> removeCards(int index, int count) {
         if (index < 0 || index + count > cards.size()) {

@@ -16,7 +16,7 @@ public class Foundation extends Pile {
         if (cards.isEmpty()) {
             return card.getRank() == Card.Rank.ACE;
         }
-        Card topCard = takeTopCard();
+        Card topCard = selectTopCard();
         return topCard.getRank().getValue() == card.getRank().getValue() - 1;
     }
 }

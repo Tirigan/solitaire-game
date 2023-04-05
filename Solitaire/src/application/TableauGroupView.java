@@ -3,15 +3,14 @@ package application;
 import java.util.List;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import models.Card;
 import models.Tableau;
 
-public class TableauView extends GridPane {
+public class TableauGroupView extends GridPane {
 	private final List<Tableau> tableaus;
 
-	public TableauView( List<Tableau> tableaus) {
+	public TableauGroupView( List<Tableau> tableaus) {
 		this.tableaus = tableaus;
 		setHgap(10); // horizontal gap between cards
 		setVgap(-65); // vertical gap between cards
@@ -23,6 +22,10 @@ public class TableauView extends GridPane {
 	            add(card.getCardImageView(), i, j); // add the image to the grid
 			}
 		}
+	}
+	
+	public List<Tableau> getTableaus() {
+		return tableaus;
 	}
 	
 }

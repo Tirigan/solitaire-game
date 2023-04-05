@@ -1,30 +1,53 @@
 package application;
 
+
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import models.Card;
 import models.Foundation;
 
-public class FoundationView extends StackPane {
+public class FoundationView extends StackPane implements CardDestination {
 	
 	private final Foundation foundation;
+	
+	private Rectangle base;
 	
 	private final StackPane stackPane = new StackPane();
 	
 	public FoundationView(Foundation foundation) {
 		this.foundation = foundation;
 		// create a rectangle with the size of the cards
-		Rectangle rectangle = new Rectangle(Card.cardWidth, Card.cardHeight);
+		base = new Rectangle(Card.cardWidth, Card.cardHeight);
 		// set the stroke color of the rectangle
-		rectangle.setStroke(Color.BLACK);
-		rectangle.setFill(Color.TRANSPARENT);
-		getChildren().add(rectangle);
+		base.setStroke(Color.BLACK);
+		base.setFill(Color.TRANSPARENT);
+		getChildren().add(base);
 	}
 	
-	public void addCardView(CardView cardView) {
-		foundation.addCard(cardView.getCard());
-		stackPane.getChildren().add(cardView.getCardImageView());
+	public void addCard(Card card) {
+		foundation.addCard(card);
+		stackPane.getChildren().add(card.getCardImageView());
+	}
+	
+
+	public Foundation getFoundation() {
+		return foundation;
+	}
+
+	@Override
+	public void displayAsDestination() {
+        DropShadow highlight = new DropShadow();
+        highlight.setColor(Color.RED);
+        highlight.setRadius(20);
+        highlight.setSpread(0.5);
+        base.setEffect(highlight);
+	}
+
+	@Override
+	public void removeAsDestination() {
+		base.setEffect(null);
 	}
 
 }
