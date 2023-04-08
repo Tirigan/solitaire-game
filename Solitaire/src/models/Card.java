@@ -126,6 +126,7 @@ public class Card implements CardDestination {
 
 	public void resetEffect() {
         imageView.setEffect(null);
+        setIsDestination(false);
 	}
 	
 

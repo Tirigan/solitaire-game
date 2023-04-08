@@ -1,6 +1,7 @@
 package application;
 
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,6 +25,7 @@ public class TableauView extends VBox implements CardDestination {
 		base.setStroke(Color.BLACK);
 		base.setFill(Color.TRANSPARENT);
 		
+		parent.setAlignment(Pos.TOP_CENTER);
 		parent.getChildren().add(base);
 		parent.getChildren().add(this);
 	}

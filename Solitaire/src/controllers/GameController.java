@@ -149,6 +149,8 @@ public class GameController {
 		resetAllCardEffects();
 	}
 	
+	private boolean isMoveInProgres() { return currentMove != null; }
+	
 	private void startMove(Pane view, int index, Pile pile,Card card) {
 		if(card.getSelected()) {
 			card.setSelected(false);
@@ -160,7 +162,7 @@ public class GameController {
 		} else {
 			resetAllCardEffects();
 			
-			currentMove = new Move(pile, view, index, 1);
+			currentMove = new Move(pile, view, index, pile.size() - index);
 			card.setSelected(true);
 			highlightDestinations(card);
 			
@@ -173,6 +175,8 @@ public class GameController {
 			if(tableauView.getTableau().canAdd(card)) {
 				if(!tableauView.getTableau().isEmpty()) {
 					tableauView.getTableau().selectTopCard().displayAsDestination(tableauView.getTableau().selectTopCard().getCardImageView());
+				} else {
+					tableauView.displayAsDestination(tableauView.getParent());
 				}
 			}
 		});
@@ -191,12 +195,22 @@ public class GameController {
 			card.resetEffect();
 		});
 		tableauGroupView.tableauViews().forEach((tableauView) -> {
+			tableauView.removeAsDestination(tableauView.getParent());
+
 			if(!tableauView.getTableau().isEmpty()) {
 				Card topCard = tableauView.getTableau().selectTopCard();
 				if(!topCard.isFaceUp()) topCard.flip();
+			} else {
+				if(tableauView.isDestination()) {
+					tableauView.getParent().setOnMouseClicked(event -> {
+						finishMove(tableauView, tableauView.getTableau());
+					});
+				}
 			}
 			
 			tableauView.getTableau().getCards().forEach((card) -> {
+
+				
 				card.resetEffect();
 				// this will prevent an already established listeners from the tableau
 				card.getCardImageView().setOnMouseClicked(event -> {

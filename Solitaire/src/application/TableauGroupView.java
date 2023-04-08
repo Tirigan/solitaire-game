@@ -16,7 +16,7 @@ public class TableauGroupView extends HBox {
 				
 		for(int i=0;i<this.tableauViews.size();i++) {
 			// add the nodes to the HBox container
-			this.getChildren().add(this.tableauViews.get(i));
+			this.getChildren().add(this.tableauViews.get(i).getParent());
 		}
 	}	
 
