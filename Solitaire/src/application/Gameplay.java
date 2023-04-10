@@ -249,6 +249,14 @@ public class Gameplay {
         }
     }
     
+ // Method to score a point
+    public void removePoint() {
+        // remove 1 to the score
+        score--;
+        // Update the score label
+        updateScoreLabel();
+    }
+    
 
     public void endGame() {
         // Stop the timer by canceling the TimerTask

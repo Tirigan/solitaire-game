@@ -44,7 +44,11 @@ public class Move {
 			gameplay.scorePoint();
         }
         
-        
+     // Check if the source pile is of the Foundation class, and remove a point if it is
+        if (sourcePile instanceof models.Foundation) {
+            Gameplay gameplay = Gameplay.getInstance(null);
+			gameplay.removePoint();
+        }
         
     }
     
