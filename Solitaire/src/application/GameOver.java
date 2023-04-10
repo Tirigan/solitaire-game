@@ -42,7 +42,7 @@ public class GameOver {
 	    titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
 	    titleLabel.setAlignment(Pos.CENTER);
 	    titleLabel.setLayoutX(0);
-	    titleLabel.setLayoutY(20);
+	    titleLabel.setLayoutY(100);
 	    titleLabel.setPrefWidth(scene.getWidth());
 	    root.getChildren().add(titleLabel);
 
@@ -51,7 +51,7 @@ public class GameOver {
 	    timeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 	    timeLabel.setAlignment(Pos.CENTER);
 	    timeLabel.setLayoutX(0);
-	    timeLabel.setLayoutY(70);
+	    timeLabel.setLayoutY(170);
 	    timeLabel.setPrefWidth(scene.getWidth());
 	    root.getChildren().add(timeLabel);
 
@@ -59,7 +59,7 @@ public class GameOver {
 	    Button exitButton = new Button("Game Menu");
 	    exitButton.setPrefWidth(120);
 	    exitButton.setLayoutX(scene.getWidth() / 2 - exitButton.getPrefWidth() / 2);
-	    exitButton.setLayoutY(100);
+	    exitButton.setLayoutY(225);
 	    exitButton.setOnAction(e -> {
 	        // Create a new instance of the GameMenu class
 	        GameMenu gameMenu = new GameMenu();

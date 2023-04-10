@@ -33,15 +33,40 @@ public class Gameplay {
     private int score;
     private Label scoreLabel;
     private Label emptyTimer;
+    private Stage primaryStage;
     
+    // private field that refers to the object
+    private static Gameplay masterGameplay;
+    
+    public static Gameplay getInstance(Stage primaryStage) {
+
+        // create object if it's not already created
+        if(masterGameplay == null) {
+        	if(primaryStage == null) {
+        		System.out.println("You must pass a primary stage");
+        		primaryStage = new Stage();
+            }
+        	masterGameplay = new Gameplay(primaryStage);
+        }
+
+         // returns the singleton object
+         return masterGameplay;
+     }
  
+    public static void resetGameplay() {
+    	
+    	masterGameplay = null;
+    }
+    
+    
     public Gameplay(Stage primaryStage) {
 
+    	this.primaryStage = primaryStage;
         // Create a pane to hold our content
         Pane root = new Pane();
        
         
-        // Set the background color to blue
+        // Set the background color to green
         root.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
         // Set the window size to 900x600 and make it not resizable
@@ -126,8 +151,8 @@ public class Gameplay {
         timer = new Timer();
         scoreLabel = new Label("0/52");
         scoreLabel.setStyle("-fx-font-size: 30;");
-        scoreLabel.setTranslateX(scene.getWidth() - 200);
-        scoreLabel.setTranslateY(20);
+        scoreLabel.setTranslateX(scene.getWidth() - 100);
+        scoreLabel.setTranslateY(75);
         Pane root1 = (Pane) scene.getRoot();
         root1.getChildren().add(scoreLabel);
         
@@ -150,30 +175,30 @@ public class Gameplay {
         timer.schedule(timerTask, 1000, 1000);
        
      // Temporary method of adding points
-        Button addPoint = new Button("Add Point");
-        addPoint.setPrefWidth(120);
-        addPoint.setLayoutX(scene.getWidth() - addPoint.getPrefWidth() -110);
-        addPoint.setLayoutY(70);
-        addPoint.setOnAction(e -> {
+//        Button addPoint = new Button("Add Point");
+//        addPoint.setPrefWidth(120);
+//        addPoint.setLayoutX(scene.getWidth() - addPoint.getPrefWidth() -110);
+//        addPoint.setLayoutY(270);
+//        addPoint.setOnAction(e -> {
             // Add 1 point
-            score++;
+//            score++;
             // Update the score label
-            updateScoreLabel();
+//            updateScoreLabel();
 
             // Check if score is equal to 52, and show GameOver popup if true
-            if (score == 52) {
-                // Get the elapsed time in minutes and seconds
-                int minutes = secondsPassed / 60;
-                int seconds = secondsPassed % 60;
-
-                // Format the elapsed time as a string
-                String timeString = String.format("%d:%02d", minutes, seconds);
-
-                // Show the GameOver popup with the elapsed time
-                GameOver.showGameOver(primaryStage, timeString);
-            }
-        });
-        root.getChildren().add(addPoint);
+//            if (score == 3) {
+//                // Get the elapsed time in minutes and seconds
+//                int minutes = secondsPassed / 60;
+//                int seconds = secondsPassed % 60;
+//
+//                // Format the elapsed time as a string
+//                String timeString = String.format("%d:%02d", minutes, seconds);
+//
+//                // Show the GameOver popup with the elapsed time
+//                GameOver.showGameOver(primaryStage, timeString);
+//            }
+//        });
+//        root.getChildren().add(addPoint);
 
  }
 
@@ -204,7 +229,26 @@ public class Gameplay {
         score++;
         // Update the score label
         updateScoreLabel();
+        CheckScorePoint();
     }
+    
+ // Method to score a point
+    public void CheckScorePoint() {
+    	
+    	// Set at 2 for presentation, switch to 52 for real gameplay
+    	if (score == 2) {
+            // Get the elapsed time in minutes and seconds
+            int minutes = secondsPassed / 60;
+            int seconds = secondsPassed % 60;
+
+            // Format the elapsed time as a string
+            String timeString = String.format("%d:%02d", minutes, seconds);
+
+            // Show the GameOver popup with the elapsed time
+            GameOver.showGameOver(this.primaryStage, timeString);
+        }
+    }
+    
 
     public void endGame() {
         // Stop the timer by canceling the TimerTask
@@ -213,10 +257,11 @@ public class Gameplay {
         // Code to end the game and timer here
     }
 
-    
 	    // Getter method for the scene
 	    public Scene getScene() {
 	        return scene;
     }
+	    
+	    
 
 }

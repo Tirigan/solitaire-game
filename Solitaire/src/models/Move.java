@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Gameplay;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -32,11 +33,19 @@ public class Move {
 
     public void execute() {
 		System.out.println("Moving card from " + sourcePile.getClass().getName() + " to " + destinationPile.getClass().getName());
-
         List<Card> cards = sourcePile.removeCards(sourceIndex, cardCount);
         List<Node> children = removeChildren(sourceIndex, cardCount);
         destinationPile.addCards(destinationIndex, cards);
         destinationPileView.getChildren().addAll(children);
+        
+     // Check if the destination pile is of the Foundation class, and add a point if it is
+        if (destinationPile instanceof models.Foundation) {
+            Gameplay gameplay = Gameplay.getInstance(null);
+			gameplay.scorePoint();
+        }
+        
+        
+        
     }
     
     private List<Node> removeChildren(int index, int count) {

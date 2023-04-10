@@ -60,8 +60,9 @@ public class GameMenu extends Application {
         startButton.setLayoutX(scene.getWidth() / 2 - startButton.getPrefWidth() / 2);
         startButton.setLayoutY(100);
         startButton.setOnAction(e -> {
+        	Gameplay.resetGameplay();
             // Create a new instance of the Gameplay class
-            Gameplay gameplay = new Gameplay(primaryStage);
+            Gameplay gameplay = Gameplay.getInstance(primaryStage);
             
             // Set the scene of the primaryStage to the scene of the Gameplay instance
             primaryStage.setScene(gameplay.getScene());
