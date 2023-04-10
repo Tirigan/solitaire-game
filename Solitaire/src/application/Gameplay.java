@@ -229,11 +229,11 @@ public class Gameplay {
         score++;
         // Update the score label
         updateScoreLabel();
-        CheckScorePoint();
+        checkScorePoint();
     }
     
  // Method to score a point
-    public void CheckScorePoint() {
+    public void checkScorePoint() {
     	
     	// Set at 2 for presentation, switch to 52 for real gameplay
     	if (score == 2) {
