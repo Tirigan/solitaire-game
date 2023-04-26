@@ -142,7 +142,7 @@ public class GameController {
 			});
 		});
 	}
-	
+		
 	private void finishMove(Pane newView, Pile newPile) {
 		currentMove.setDestinationPile(newPile, newView, newPile.size());
 		currentMove.execute();

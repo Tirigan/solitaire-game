@@ -5,15 +5,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -28,8 +25,8 @@ public class GameMenu extends Application {
         // Set the background color to green
         root.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
-        // Set the window size to 900x600 and make it not resizable
-        Scene scene = new Scene(root, 900, 600);
+        // Set the window size to 620 and make it not resizable
+        Scene scene = new Scene(root, 620, 600);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
 

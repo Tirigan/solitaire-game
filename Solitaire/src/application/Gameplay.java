@@ -1,13 +1,11 @@
 package application;
 
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import controllers.GameController;
 import javafx.scene.Scene;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -69,8 +67,8 @@ public class Gameplay {
         // Set the background color to green
         root.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
-        // Set the window size to 900x600 and make it not resizable
-        scene = new Scene(root, 900, 600);
+        // Set the window size to 620x600 and make it not resizable
+        scene = new Scene(root, 620, 600);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
@@ -81,8 +79,8 @@ public class Gameplay {
         // Create a button for showing the rules
         Button rulesButton = new Button("Rules");
         rulesButton.setPrefWidth(120);
-        rulesButton.setLayoutX(scene.getWidth() - rulesButton.getPrefWidth() - 760);
-        rulesButton.setLayoutY(550);
+        rulesButton.setLayoutX(16);
+        rulesButton.setLayoutY(scene.getHeight() - 48);
         rulesButton.setOnAction(e -> {
             // Show the rules popup
             RulesPopup.showPopup(primaryStage);
@@ -93,8 +91,8 @@ public class Gameplay {
         // Create a button for exiting the game
         Button exitButton = new Button("Exit Game");
         exitButton.setPrefWidth(120);
-        exitButton.setLayoutX(scene.getWidth() - exitButton.getPrefWidth() - 20);
-        exitButton.setLayoutY(550);
+        exitButton.setLayoutX(scene.getWidth() - exitButton.getPrefWidth() - 16);
+        exitButton.setLayoutY(scene.getHeight() - 48);
         exitButton.setOnAction(e -> {
             // Show a confirmation dialog box
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -138,7 +136,7 @@ public class Gameplay {
         
         // layout the foundations
         final Node foundations = gameController.getFoundationGroupView();
-        foundations.setLayoutX(scene.getWidth() - (scene.getWidth()/2));
+        foundations.setLayoutX(48 + (Card.cardWidth * 3));
         foundations.setLayoutY(scene.getHeight() - (scene.getHeight() - 16));
         
         root.getChildren().add(tableauView);
@@ -174,31 +172,6 @@ public class Gameplay {
         };
         timer.schedule(timerTask, 1000, 1000);
        
-     // Temporary method of adding points
-//        Button addPoint = new Button("Add Point");
-//        addPoint.setPrefWidth(120);
-//        addPoint.setLayoutX(scene.getWidth() - addPoint.getPrefWidth() -110);
-//        addPoint.setLayoutY(270);
-//        addPoint.setOnAction(e -> {
-            // Add 1 point
-//            score++;
-            // Update the score label
-//            updateScoreLabel();
-
-            // Check if score is equal to 52, and show GameOver popup if true
-//            if (score == 3) {
-//                // Get the elapsed time in minutes and seconds
-//                int minutes = secondsPassed / 60;
-//                int seconds = secondsPassed % 60;
-//
-//                // Format the elapsed time as a string
-//                String timeString = String.format("%d:%02d", minutes, seconds);
-//
-//                // Show the GameOver popup with the elapsed time
-//                GameOver.showGameOver(primaryStage, timeString);
-//            }
-//        });
-//        root.getChildren().add(addPoint);
 
  }
 
