@@ -30,7 +30,7 @@ public class GameOver {
 	    root.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 
 	    // Set the window size to 900x600 and make it not resizable
-	    Scene scene = new Scene(root, 900, 600);
+	    Scene scene = new Scene(root, 620, 600);
 	    owner.setScene(scene);
 	    owner.setResizable(false);
 

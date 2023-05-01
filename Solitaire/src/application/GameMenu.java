@@ -43,7 +43,7 @@ public class GameMenu extends Application {
         root.getChildren().add(titleLabel);
         
      // Add a label for the version number
-        Label versionLabel = new Label("Version 2.0");
+        Label versionLabel = new Label("Version 3.0");
         versionLabel.setFont(new Font("Arial", 14));
         versionLabel.setTextFill(Color.GRAY);
         versionLabel.setLayoutX(scene.getWidth() - 100);
